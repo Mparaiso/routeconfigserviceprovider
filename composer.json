@@ -21,7 +21,7 @@
   "require": {
     "php": ">=5.3.3",
     "symfony/rounting":"2.2.*",
-    "symfony/config":"*2.2.*",
+    "symfony/config":"2.2.*"
   },
   "suggest": {},
   "autoload": {
