@@ -8,7 +8,8 @@ contact: mparaiso@online.fr
 
 status: Work in progress
 
+License: GPL
+
 @copyright M.PARAISO
 
-License GPL
 
