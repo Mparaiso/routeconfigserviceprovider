@@ -1,0 +1,32 @@
+{
+  "name": "mparaiso/routeconfigserviceprovider",
+  "description": "Route config file support for Silex framework",
+  "keywords": [
+    "silex",
+    "extensions",
+    "doctrine",
+    "orm"
+  ],
+  "homepage": "https://github.com/Mparaiso/routeconfigserviceprovider",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "MParaiso",
+      "email": "mparaiso@online.fr"
+    }
+  ],
+  "require-dev": {
+    "silex/silex": "*"
+  },
+  "require": {
+    "php": ">=5.3.3",
+    "symfony/rounting":"2.2.*",
+    "symfony/config":"*2.2.*",
+  },
+  "suggest": {},
+  "autoload": {
+    "psr-0": {
+      "Mparaiso": "src/"
+    }
+  }
+}
