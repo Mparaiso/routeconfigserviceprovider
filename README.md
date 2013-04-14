@@ -12,4 +12,21 @@ License: GPL
 
 @copyright M.PARAISO
 
+### Usage
+
+```php
+ $app->register( new RouteConfigServiceProvider);
+ $app["mp.route_loader"]->append(array(
+    array(
+        "type"=>"yaml",
+        "path"=>__DIR__."/routes.yml",
+ 	"prefix"=>"/",
+    ),        
+ ));
+```
+### Changelog
+
+v0.0.5 RouteCollectionLoaderProvider renamed RouteConfigServiceProvider
+
+
 

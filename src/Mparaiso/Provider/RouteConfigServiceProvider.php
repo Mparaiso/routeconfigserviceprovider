@@ -31,7 +31,7 @@ use Silex\Application;
  *		));
  *
  */
-class RouteCollectionLoaderProvider implements ServiceProviderInterface {
+class RouteConfigServiceProvider implements ServiceProviderInterface {
 	function __construct($namespace="mp"){
 		$this->ns = $namespace;
 	}
