@@ -21,11 +21,11 @@ use Silex\Application;
  * Usage :
  * $app->register( new RouteCollectionLoaderProvider);
  * 		$app["mp.route_loader"]->append(array(
- * 				array(
- * 						"type"=>"yaml",
- * 						"path"=>__DIR__."/Resources/routes/routes.yml",
- * 						"prefix"=>"/",
- * 					),
+ *                  array(
+ *                  "type"=>"yaml",
+ *                  "path"=>__DIR__."/Resources/routes/routes.yml",
+ *                  "prefix"=>"/",
+ *                  ),
  *               ...
  * 		));
  *
@@ -42,8 +42,9 @@ class RouteConfigServiceProvider implements ServiceProviderInterface {
 
     public function register(Application $app) {
         $app["mp.route_collections"] = array();
+        $app["mp.route_loader.parameters"] = array();
         $app["mp.route_loader"] = $app->share(function($app) {
-                    return new RouteLoader($app);
+                    return new RouteLoader($app['routes']);
                 }
         );
     }

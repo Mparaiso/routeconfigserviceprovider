@@ -8,11 +8,14 @@
 
 namespace Mparaiso\Routing;
 
-use Symfony\Component\Config\FileLocator;
+use Silex\Application;
+use Silex\RequestContext;
 use Symfony\Component\Config\ConfigCache;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Loader\XmlFileLoader;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
-use Silex\Application;
+use Symfony\Component\Routing\RouteCollection;
 
 /**
  * FR : aide à la configuration des routes
@@ -20,18 +23,18 @@ use Silex\Application;
  */
 class RouteLoader {
 
-    protected $app;
+    protected $routes;
 
-    function __construct(Application $app) {
-        $this->app = $app;
+    function __construct(RouteCollection $routes) {
+        $this->routes = $routes;
     }
 
     /**
      * FR : ajoute de multiples configurations de routes aux routes actuelles
      * EN : add multiple route resources to the current routes
      */
-    public function append(array $routes = array()) {
-        foreach ($routes as $route) {
+    public function append(array $route_resources = array()) {
+        foreach ($route_resources as $route) {
             $this->add($route["type"], $route["path"], $route["prefix"]);
         }
     }
@@ -43,28 +46,12 @@ class RouteLoader {
     public function add($type, $path, $prefix = NULL) {
         if (!is_file($path))
             throw new \Exception(" \$path must be a file ,  $path given ");
-        if (isset($this->app["mp.route_loader.cache_dir"])) {
-            $cacheDir = $this->app["mp.route_loader.cache_dir"];
-            //$this->app["logger"]->log("writing cached route collection file, $cacheDir");
-            $className = "RouteCollection_" . md5($path);
-            $collectionCache = new ConfigCache($file = $cacheDir . "/" . $className . ".php", $this->app["debug"]);
-            if (!$collectionCache->isFresh()) {
-                $collection = $this->loadRouteCollection($type, $path);
-                $dumper = new \Symfony\Component\Routing\Matcher\Dumper\PHPMatcherDumper($collection);
-                $collectionCache->write(
-                        $dumper->dump(array("class" => $className))
-                );
-            }
-        } else {
-            $collection = $this->loadRouteCollection($type, $path);
-        }
-        $this->app["routes"] = $this->app->share(
-                $this->app->extend("routes", function($routes)use($collection, $prefix) {
-                            $collection->addPrefix($prefix);
-                            $routes->addCollection($collection);
-                            return $routes;
-                        })
-        );
+        #@TODO fix that stuff  : problem : some kind of PHPRouteCollectionDumper needs to be created
+        #see below
+
+        $collection = $this->loadRouteCollection($type, $path);
+        $collection->addPrefix($prefix);
+        $this->routes->addCollection($collection);
     }
 
     /**
@@ -93,4 +80,25 @@ class RouteLoader {
     }
 
 }
+
+#@TODO fix that stuff  : problem : some kind of PHPRouteCollectionDumper needs to be created in order to cache the route collection
+       /* if (isset($this->app["mp.route_loader.cache_dir"])) {
+            $cacheDir = $this->app["mp.route_loader.cache_dir"];
+            //$this->app["logger"]->log("writing cached route collection file, $cacheDir");
+            $className = "RouteCollection_" . md5($path);
+            $collectionCache = new ConfigCache($file = $cacheDir . "/" . $className . ".php", $this->app["debug"]);
+            if (!$collectionCache->isFresh()) {
+                $collection = $this->loadRouteCollection($type, $path);
+                $dumper = new \Symfony\Component\Routing\Matcher\Dumper\PHPMatcherDumper($collection);
+                $collectionCache->write(
+                        $dumper->dump(array("class" => $className))
+                );
+            } else {
+                require $file;
+                $requestContext = new RequestContext;
+                $r = Request::createFromGlobals();
+                $requestContext->fromRequest($r);
+                $collection = new $className($requestContext);
+            }
+        } else {*/
 

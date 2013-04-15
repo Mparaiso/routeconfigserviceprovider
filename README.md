@@ -21,7 +21,6 @@ License: GPL
 
 ```php
         $app->register(new RouteConfigServiceProvider,array(
-            "mp.route_loader.cache_dir"=>__DIR__."/../temp/routing/", /* cache directory for yml,xml files */
             "mp.route_collections"=>array(
                 array(
                     "type"=>"yaml",
@@ -32,8 +31,9 @@ License: GPL
         ));
 ```
 ### Changelog
-
+v0.0.8 cache removed because of problems, a proper dumper needs to be created
 v0.0.5 RouteCollectionLoaderProvider renamed RouteConfigServiceProvider
+
 
 
 
