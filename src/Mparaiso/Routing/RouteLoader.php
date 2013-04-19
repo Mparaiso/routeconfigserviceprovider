@@ -95,25 +95,3 @@ class RouteLoader {
     }
 
 }
-
-#@TODO fix that stuff  : problem : some kind of PHPRouteCollectionDumper needs to be created in order to cache the route collection
-       /* if (isset($this->app["mp.route_loader.cache_dir"])) {
-            $cacheDir = $this->app["mp.route_loader.cache_dir"];
-            //$this->app["logger"]->log("writing cached route collection file, $cacheDir");
-            $className = "RouteCollection_" . md5($path);
-            $collectionCache = new ConfigCache($file = $cacheDir . "/" . $className . ".php", $this->app["debug"]);
-            if (!$collectionCache->isFresh()) {
-                $collection = $this->loadRouteCollection($type, $path);
-                $dumper = new \Symfony\Component\Routing\Matcher\Dumper\PHPMatcherDumper($collection);
-                $collectionCache->write(
-                        $dumper->dump(array("class" => $className))
-                );
-            } else {
-                require $file;
-                $requestContext = new RequestContext;
-                $r = Request::createFromGlobals();
-                $requestContext->fromRequest($r);
-                $collection = new $className($requestContext);
-            }
-        } else {*/
-
