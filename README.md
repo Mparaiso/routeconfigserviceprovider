@@ -20,15 +20,24 @@ License: GPL
 ### Usage
 
 ```php
-        $app->register(new RouteConfigServiceProvider,array(
-            "mp.route_collections"=>array(
-                array(
+   Usage :
+   $app->register( new RouteCollectionLoaderProvider,array(
+       'mp.route_loader.cache'=>__DIR__."/Temp/",
+       "mp.route_loader.debug"=>false,
+       "mp.route_collections"=>array(
+           "type"=>"yaml",
+           "path"=>"routes.yaml",
+           "prefix"=>"/prefix",
+       )
+   ));
+   $app["mp.route_loader"]->append(array(
+                    array(
                     "type"=>"yaml",
-                    "path"=>__DIR__.'/Resource/routing/routes.yml',
-                    "prefix"=>"/"
-                )
-            )
-        ));
+                    "path"=>__DIR__."/Resources/routes/routes.yml",
+                    "prefix"=>"/",
+                    ),
+                 ...
+   ));
 ```
 ### Changelog
 v0.0.8 cache removed because of problems, a proper dumper needs to be created
