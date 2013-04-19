@@ -40,6 +40,7 @@ License: GPL
    ));
 ```
 ### Changelog
+v0.0.21 Route Cache is back and fully working !
 v0.0.8 cache removed because of problems, a proper dumper needs to be created
 v0.0.5 RouteCollectionLoaderProvider renamed RouteConfigServiceProvider
 
