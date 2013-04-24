@@ -53,7 +53,7 @@ EOF;
  *                    
  */                   
 EOF;
-            $route_name = "\$route$name";
+            $route_name = "\$route".preg_replace("/!\W/im","_",$name);
             $result.= "\n{$route_name} = new Route(".var_export($route->getPath(),true).");";
             /* @var $route Route */
             foreach ($fields as $field) {
